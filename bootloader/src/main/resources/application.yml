@@ -1,0 +1,37 @@
+quarkus:  
+  banner:    
+    # remove quarkus logo at startup logs
+    enabled: false
+
+  log:
+    level: INFO
+    category:
+      "dxc.microservice.quarkus":
+        level: DEBUG
+
+
+  # configure your datasource
+  datasource:
+    db-kind: postgresql
+    username: postgres
+    password: postgres
+    jdbc:
+      url: jdbc:postgresql://192.168.123.115:5433/prophall
+  
+  hibernate-orm:
+    # drop and create the database at startup (use `update` to only update the schema)
+    database:      
+      generation: none
+#        ~: none
+#        create-schemas: true
+      default-schema: quarkus    
+
+  flyway:
+    baseline-on-migrate: true
+    migrate-at-start: true
+    create-schemas: true
+#    clean-at-start: true
+    schemas: quarkus
+
+# enables json foramt for micrometer metrics
+quarkus.micrometer.export.json.enabled: true
