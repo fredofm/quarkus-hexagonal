@@ -2,6 +2,8 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
+    <packaging>jar</packaging>
+    
     <parent>
         <groupId>dxc.microservice.quarkus</groupId>
         <artifactId>quarkus-hexagonal</artifactId>
@@ -10,7 +12,7 @@
 
     <artifactId>domain</artifactId>
     <name>domain</name>
-    <description>application</description>
+    <description>domain</description>
 
     <dependencies>
         <dependency>
@@ -23,11 +25,7 @@
             <plugin>
                 <groupId>${quarkus.platform.group-id}</groupId>
                 <artifactId>quarkus-maven-plugin</artifactId>
-            </plugin>
-            <plugin>
-                <groupId>org.jboss.jandex</groupId>
-                <artifactId>jandex-maven-plugin</artifactId>
-            </plugin>
-        </plugins>        
+            </plugin>      
+        </plugins> 
     </build>
 </project>
