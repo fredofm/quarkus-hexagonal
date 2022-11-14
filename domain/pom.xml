@@ -20,12 +20,13 @@
             <artifactId>lombok</artifactId>
         </dependency>
     </dependencies>
-    <build>
+
+     <build>
         <plugins>
             <plugin>
-                <groupId>${quarkus.platform.group-id}</groupId>
-                <artifactId>quarkus-maven-plugin</artifactId>
-            </plugin>      
-        </plugins> 
+                <groupId>io.smallrye</groupId>
+                <artifactId>jandex-maven-plugin</artifactId>
+            </plugin>
+        </plugins>
     </build>
 </project>

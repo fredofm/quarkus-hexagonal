@@ -10,14 +10,15 @@
 
     <properties>
         <compiler-plugin.version>3.8.1</compiler-plugin.version>
-        <failsafe.useModulePath>false</failsafe.useModulePath>
         <maven.compiler.release>17</maven.compiler.release>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+        <failsafe.useModulePath>false</failsafe.useModulePath>        
+        <surefire-plugin.version>3.0.0-M5</surefire-plugin.version>
         <quarkus.platform.artifact-id>quarkus-bom</quarkus.platform.artifact-id>
         <quarkus.platform.group-id>io.quarkus.platform</quarkus.platform.group-id>
-        <quarkus.platform.version>2.11.2.Final</quarkus.platform.version>
-        <surefire-plugin.version>3.0.0-M5</surefire-plugin.version>
+        <quarkus.platform.version>2.14.0.Final</quarkus.platform.version>
+        <jandex.maven.plugin.version>3.0.1</jandex.maven.plugin.version>        
         <lombok.version>1.18.22</lombok.version>
         <org.mapstruct.version>1.4.2.Final</org.mapstruct.version>
     </properties>
@@ -69,10 +70,22 @@
                     </executions>
                 </plugin>
                 <plugin>
+                    <groupId>io.smallrye</groupId>
+                    <artifactId>jandex-maven-plugin</artifactId>
+                    <version>${jandex.maven.plugin.version}</version>
+                    <executions>
+                        <execution>
+                            <id>make-index</id>
+                            <goals>
+                                <goal>jandex</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                </plugin>
+                <plugin>
                     <artifactId>maven-compiler-plugin</artifactId>
                     <version>${compiler-plugin.version}</version>
                     <configuration>
-                        <release>17</release>
                         <compilerArgs>
                             <arg>-parameters</arg>
                         </compilerArgs>
@@ -87,14 +100,14 @@
                             <maven.home>${maven.home}</maven.home>
                         </systemPropertyVariables>
                     </configuration>
-                </plugin>                
+                </plugin>
             </plugins>
         </pluginManagement>
     </build>
     <modules>
         <module>domain</module>
-        <module>application</module>        
+        <module>application</module>
         <module>infrastructure</module>
-        <module>bootloader</module>        
+        <module>bootloader</module>
     </modules>
 </project>
