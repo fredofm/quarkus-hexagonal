@@ -5,33 +5,34 @@ quarkus:
 
   log:
     level: INFO
-    category:
-      "dxc.microservice.quarkus":
-        level: DEBUG
 
+"%prod":
+  vault:
+    url: http://localhost:8200
 
-  # configure your datasource
-  datasource:
-    db-kind: postgresql
-    username: postgres
-    password: postgres
-    jdbc:
-      url: jdbc:postgresql://192.168.123.115:5433/prophall
+    # vault authentication
+    authentication:
+      userpass:
+        username: bob
+        password: sinclair
+
+    # path within the kv secret engine where is located the vault-quickstart secret configuration
+    secret-config-kv-path: secret/myapp/config
   
-  hibernate-orm:
-    # drop and create the database at startup (use `update` to only update the schema)
-    database:      
-      generation: none
-#        ~: none
-#        create-schemas: true
-      default-schema: quarkus    
+"%dev":
+  quarkus:
+    vault:
+      devservices:
+        init-commands: 'kv put secret/config password="p@$$w0rd"'
+        port: 54995
 
-  flyway:
-    baseline-on-migrate: true
-    migrate-at-start: true
-    create-schemas: true
-#    clean-at-start: true
-    schemas: quarkus
-
-# enables json foramt for micrometer metrics
-quarkus.micrometer.export.json.enabled: true
+    log:
+      category:
+        "dxc.microservice.quarkus":
+          level: DEBUG
+        "io.quarkus.vault":
+          level: DEBUG
+      file:
+        enable: true
+        path: target/quarkus.log
+        level: ALL   

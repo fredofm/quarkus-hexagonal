@@ -4,7 +4,7 @@
   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <modelVersion>4.0.0</modelVersion>
   <packaging>jar</packaging>
-  
+
   <parent>
     <groupId>dxc.microservice.quarkus</groupId>
     <artifactId>quarkus-hexagonal</artifactId>
@@ -15,17 +15,11 @@
   <name>bootloader</name>
   <description>bootloader</description>
 
-  <dependencies>   
+  <dependencies>
     <!-- Adds yaml support for configuration files -->
     <dependency>
       <groupId>io.quarkus</groupId>
       <artifactId>quarkus-config-yaml</artifactId>
-    </dependency>    
-
-    <!-- Flyway specific dependencies -->
-    <dependency>
-      <groupId>io.quarkus</groupId>
-      <artifactId>quarkus-flyway</artifactId>
     </dependency>
 
     <!-- Add metrics to our application -->
@@ -46,8 +40,20 @@
     </dependency>
     <dependency>
       <groupId>dxc.microservice.quarkus</groupId>
+      <artifactId>adapter-dynamodb</artifactId>
+      <version>0.0.1-SNAPSHOT</version>
+    </dependency>
+   <!--  <dependency>
+      <groupId>dxc.microservice.quarkus</groupId>
       <artifactId>adapter-postgresql</artifactId>
       <version>0.0.1-SNAPSHOT</version>
+    </dependency> -->
+
+    <!-- Vault configuration -->
+    <dependency>
+      <groupId>io.quarkiverse.vault</groupId>
+      <artifactId>quarkus-vault</artifactId>
+      <version>2.1.0</version>
     </dependency>
   </dependencies>
   <build>
@@ -55,7 +61,7 @@
       <plugin>
         <groupId>${quarkus.platform.group-id}</groupId>
         <artifactId>quarkus-maven-plugin</artifactId>
-      </plugin>      
+      </plugin>
     </plugins>
   </build>
   <profiles>

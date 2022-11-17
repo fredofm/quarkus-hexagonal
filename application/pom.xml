@@ -33,6 +33,7 @@
 
     <build>
         <plugins>
+            <!-- Jandex plugin needed to use context beans in other modules -->
             <plugin>
                 <groupId>io.smallrye</groupId>
                 <artifactId>jandex-maven-plugin</artifactId>
