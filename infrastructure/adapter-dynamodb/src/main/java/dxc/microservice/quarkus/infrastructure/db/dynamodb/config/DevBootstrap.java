@@ -5,6 +5,7 @@ import javax.enterprise.event.Observes;
 import javax.inject.Inject;
 
 import dxc.microservice.quarkus.infrastructure.db.dynamodb.dbo.PropEntity;
+import io.quarkus.arc.profile.UnlessBuildProfile;
 import io.quarkus.runtime.StartupEvent;
 import lombok.extern.slf4j.Slf4j;
 import software.amazon.awssdk.enhanced.dynamodb.DynamoDbEnhancedClient;
@@ -13,9 +14,9 @@ import software.amazon.awssdk.enhanced.dynamodb.TableSchema;
 import software.amazon.awssdk.enhanced.dynamodb.model.DescribeTableEnhancedResponse;
 import software.amazon.awssdk.services.dynamodb.DynamoDbClient;
 import software.amazon.awssdk.services.dynamodb.model.ResourceNotFoundException;
-import software.amazon.awssdk.services.dynamodb.model.TableDescription;
 
 @ApplicationScoped
+@UnlessBuildProfile("prod")
 @Slf4j
 public class DevBootstrap {
     private static final String PROPS_TABLE = "props";
