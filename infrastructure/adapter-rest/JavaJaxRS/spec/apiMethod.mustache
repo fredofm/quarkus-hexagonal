@@ -1,0 +1,21 @@
+
+    @{{httpMethod}}{{#subresourceOperation}}
+    @Path("{{{path}}}"){{/subresourceOperation}}{{#hasConsumes}}
+    @Consumes({ {{#consumes}}"{{{mediaType}}}"{{^-last}}, {{/-last}}{{/consumes}} }){{/hasConsumes}}{{#hasProduces}}
+    @Produces({ {{#produces}}"{{{mediaType}}}"{{^-last}}, {{/-last}}{{/produces}} }){{/hasProduces}}
+    @Operation(summary = "{{{summary}}}", description = "{{{notes}}}")
+    {{#implicitHeadersParams.0}}
+    @io.swagger.annotations.ApiImplicitParams({
+        {{#implicitHeadersParams}}
+        @io.swagger.annotations.ApiImplicitParam(name = "{{{baseName}}}", value = "{{{description}}}", {{#required}}required = true,{{/required}} dataType = "{{{dataType}}}", paramType = "header"){{^-last}},{{/-last}}
+        {{/implicitHeadersParams}}
+    })
+    {{/implicitHeadersParams.0}}
+    @APIResponses(value = { {{#responses}}
+        @APIResponse(responseCode = "{{{code}}}", description = "{{{message}}}", content = @Content(mediaType = {{#produces}}"{{{mediaType}}}"{{^-last}}, {{/-last}}{{/produces}}, schema = @Schema(type = SchemaType.{{#lambda.uppercase}}{{{schema.type}}}{{/lambda.uppercase}}, implementation = {{{returnBaseType}}}.class){{^-last}},{{/-last}}{{/responses}}))
+    })
+    public {{#supportAsync}}CompletionStage<{{/supportAsync}}Response{{#supportAsync}}>{{/supportAsync}} {{nickname}}({{#allParams}}{{>queryParams}}{{>pathParams}}{{>cookieParams}}{{>headerParams}}{{>bodyParams}}{{>formParams}}{{^-last}},{{/-last}}{{/allParams}}) {
+        return {{#supportAsync}}CompletableFuture.supplyAsync(() -> {{/supportAsync}}Response.ok().entity("magic!").build(){{#supportAsync}}){{/supportAsync}};
+    }
+
+    protected abstract Response do{{#lambda.titlecase}}{{nickname}}{{/lambda.titlecase}}({{#allParams}}{{>queryParams}}{{>pathParams}}{{>cookieParams}}{{>headerParams}}{{>bodyParams}}{{>formParams}}{{^-last}},{{/-last}}{{/allParams}});

@@ -1,0 +1,105 @@
+package {{package}};
+
+{{#imports}}
+import {{import}};
+{{/imports}}
+
+import javax.ws.rs.*;
+import javax.ws.rs.core.Response;
+
+{{#useSwaggerAnnotations}}
+{{/useSwaggerAnnotations}}
+import org.eclipse.microprofile.openapi.annotations.OpenAPIDefinition;
+import org.eclipse.microprofile.openapi.annotations.enums.SchemaType;
+import org.eclipse.microprofile.openapi.annotations.info.Contact;
+import org.eclipse.microprofile.openapi.annotations.info.Info;
+import org.eclipse.microprofile.openapi.annotations.info.License;
+import org.eclipse.microprofile.openapi.annotations.media.Content;
+import org.eclipse.microprofile.openapi.annotations.media.Schema;
+import org.eclipse.microprofile.openapi.annotations.Operation;
+import org.eclipse.microprofile.openapi.annotations.responses.APIResponse;
+import org.eclipse.microprofile.openapi.annotations.responses.APIResponses;
+import org.eclipse.microprofile.openapi.annotations.tags.Tag;
+{{#hasAuthMethods}}
+import org.eclipse.microprofile.openapi.annotations.security.OAuthFlow;
+import org.eclipse.microprofile.openapi.annotations.security.OAuthFlows;
+import org.eclipse.microprofile.openapi.annotations.security.OAuthScope;
+import org.eclipse.microprofile.openapi.annotations.security.SecurityRequirement;
+import org.eclipse.microprofile.openapi.annotations.security.SecurityScheme;
+import org.eclipse.microprofile.openapi.annotations.security.SecuritySchemes;
+import org.eclipse.microprofile.openapi.annotations.enums.SecuritySchemeIn;
+import org.eclipse.microprofile.openapi.annotations.enums.SecuritySchemeType;
+{{/hasAuthMethods}}
+{{#supportAsync}}
+
+import java.util.concurrent.CompletionStage;
+import java.util.concurrent.CompletableFuture;
+{{/supportAsync}}
+{{#useBeanValidation}}
+
+import javax.validation.constraints.*;
+import javax.validation.Valid;
+{{/useBeanValidation}}
+
+@Path("{{commonPath}}"){{#useSwaggerAnnotations}}
+@Tag(description = "the {{{baseName}}} API"){{/useSwaggerAnnotations}}{{#hasConsumes}}
+@Consumes({ {{#consumes}}"{{{mediaType}}}"{{^-last}}, {{/-last}}{{/consumes}} }){{/hasConsumes}}{{#hasProduces}}
+@Produces({ {{#produces}}"{{{mediaType}}}"{{^-last}}, {{/-last}}{{/produces}} }){{/hasProduces}}
+{{#hasAuthMethods}}
+@SecuritySchemes({
+{{#authMethods}}
+@SecurityScheme(securitySchemeName = "{{name}}",
+                description = "{{description}}",                
+                {{#scheme}}
+                scheme = "{{{.}}}",
+                {{/scheme}}
+{{#isBasicBearer}}
+                bearerFormat = "{{bearerFormat}}",
+{{/isBasicBearer}}
+{{#isApiKey}}
+                apiKeyName = "{{keyParamName}}",
+                {{#isKeyInCookie}}
+                in = SecuritySchemeIn.COOKIE,
+                {{/isKeyInCookie}}
+                {{#isKeyInHeader}}
+                in = SecuritySchemeIn.HEADER,
+                {{/isKeyInHeader}}
+                {{#isKeyInQuery}}
+                in = SecuritySchemeIn.QUERY,
+                {{/isKeyInQuery}}
+{{/isApiKey}}
+{{#isOAuth}}
+                flows = @OAuthFlows(
+                    authorizationCode = @OAuthFlow(
+                        authorizationUrl = "{{authorizationUrl}}",
+                        refreshUrl = "{{refreshUrl}}",
+                        tokenUrl = "{{tokenUrl}}",
+                        scopes = {
+                        {{#scopes}}
+                            @OAuthScope(name = "{{scope}}", description = "{{description}}"){{^-last}},{{/-last}}
+                        {{/scopes}}
+                        })
+                    ),
+{{/isOAuth}}
+                type = SecuritySchemeType.{{#lambda.uppercase}}{{type}}{{/lambda.uppercase}}){{^-last}},{{/-last}}
+{{/authMethods}}
+})
+{{/hasAuthMethods}}
+@OpenAPIDefinition(    
+    info = @Info(title = "{{title}}", version = "{{version}}",    
+                contact = @Contact(
+                        name = "{{infoName}}",
+                        url = "{{infoUrl}}",
+                        email = "{{infoEmail}}"),    
+                license = @License(
+                    name = "{{licenseInfo}}",
+                    url = "{{licenseUrl}}")),    
+    {{#hasAuthMethods}}security = @SecurityRequirement(name = "{{authMethods.0.name}}"{{/hasAuthMethods}}))
+{{>generatedAnnotation}}
+public abstract {{#interfaceOnly}}interface{{/interfaceOnly}}{{^interfaceOnly}}class{{/interfaceOnly}} {{classname}} {
+{{#operations}}
+{{#operation}}
+{{#interfaceOnly}}{{>apiInterface}}{{/interfaceOnly}}{{^interfaceOnly}}{{>apiMethod}}{{/interfaceOnly}}
+{{/operation}}
+}
+{{/operations}}

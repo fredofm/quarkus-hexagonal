@@ -85,6 +85,43 @@
                 <groupId>io.smallrye</groupId>
                 <artifactId>jandex-maven-plugin</artifactId>
             </plugin>
+            <plugin>
+                <groupId>org.openapitools</groupId>
+                <artifactId>openapi-generator-maven-plugin</artifactId>
+                <version>6.2.1</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>generate</goal>
+                        </goals>
+                        <configuration>
+                            <inputSpec>${project.basedir}/src/main/resources/api.yml</inputSpec>
+                            <generatorName>jaxrs-spec</generatorName>
+                            <additionalProperties></additionalProperties>
+                            <supportingFilesToGenerate>false</supportingFilesToGenerate>
+                            <generateApis>true</generateApis>
+                            <modelNameSuffix>DTO</modelNameSuffix>
+                            <apiNameSuffix>API</apiNameSuffix>
+                            <templateDirectory>JavaJaxRS/spec</templateDirectory>  
+                            <!-- <configHelp>true</configHelp> -->                                                     
+                            <configOptions>
+                                <modelPackage>dxc.micrservice.quarkus.infrastructure.rest.dto</modelPackage>
+                                <apiPackage>dxc.micrservice.quarkus.infrastructure.rest.api</apiPackage>
+                                <packageName>dxc.micrservice.quarkus.infrastructure.rest</packageName>
+                                <useSwaggerAnnotations>true</useSwaggerAnnotations>
+                                <library>quarkus</library>
+                                <sourceFolder>src/java</sourceFolder>
+                                <implFolder>src/java</implFolder>
+                                <useBeanValidation>false</useBeanValidation>
+                                <skipValidateSpec>false</skipValidateSpec>
+                                <removeOperationIdPrefix>true</removeOperationIdPrefix>
+                                <generateModelDocumentation>true</generateModelDocumentation>   
+                                <generateApiDocumentation>true</generateApiDocumentation>
+                            </configOptions>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
         </plugins>
     </build>
 

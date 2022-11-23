@@ -1,4 +1,4 @@
-package dxc.microservice.quarkus.infrastructure.rest.resources;
+package dxc.microservice.quarkus.infrastructure.rest.api;
 
 import java.net.URI;
 import java.util.List;

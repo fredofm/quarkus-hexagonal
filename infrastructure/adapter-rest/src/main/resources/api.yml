@@ -1,0 +1,88 @@
+openapi: '3.0.2'
+info:
+  title: API Title
+  version: '1.0'
+  contact: 
+    name: API Support
+    url: http://www.example.com/support
+    email: support@example.com  
+  license: 
+    name: Apache 2.0
+    url: https://www.apache.org/licenses/LICENSE-2.0.html
+  
+servers:
+  - url: https://api.server.test/v1
+
+
+paths:
+  /loans:
+    get:
+      responses:
+        '200':
+          description:  Successfully returned a list of loans
+          content:
+              application/json:
+                schema:
+                  type: array
+                  items:
+                    $ref: '#/components/schemas/Loan'
+  /loans/{id}:
+    get:
+      description: Obtain information about a loan from his unique id
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description:  Successfully returned a list of loans
+          content:
+              application/json:
+                schema:
+                  type: array
+                  items:
+                    $ref: '#/components/schemas/Loan'
+
+components:
+  schemas:
+    Loan: 
+      type: object
+      description: test description.
+      required:
+        - id
+        - name
+      properties:
+        id:
+          type: integer
+          description: test description
+          format: int64
+        name:
+          type: string
+          description: test description
+          format: url
+        running:
+          type: boolean
+  # Basic authentication
+  securitySchemes:
+    BasicAuth:
+      type: http
+      scheme: basic
+    api_key:
+      type: apiKey
+      name: api_key
+      in: header
+    petstore_auth:
+      type: oauth2
+      flows: 
+        implicit:
+          authorizationUrl: http://example.org/api/oauth/dialog
+          scopes:
+            write:pets: modify pets in your account
+            read:pets: read your pets
+security:
+  - BasicAuth: []
+
+
+

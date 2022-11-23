@@ -1,0 +1,110 @@
+import java.util.Objects;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonValue;
+import com.fasterxml.jackson.annotation.JsonTypeName;
+
+import org.eclipse.microprofile.openapi.annotations.media.Schema;
+
+{{#discriminator}}{{>typeInfoAnnotation}}{{/discriminator}}{{#description}}/**
+ * {{.}}
+ **/{{/description}}
+{{#useSwaggerAnnotations}}{{#description}}@Schema(description = "{{{.}}}"{{/description}}, name="{{classname}}"){{/useSwaggerAnnotations}}
+@JsonTypeName("{{name}}")
+{{>generatedAnnotation}}{{>additionalModelTypeAnnotations}}
+{{#vendorExtensions.x-class-extra-annotation}}
+{{{vendorExtensions.x-class-extra-annotation}}}
+{{/vendorExtensions.x-class-extra-annotation}}
+public class {{classname}} {{#parent}}extends {{{.}}}{{/parent}} {{#vendorExtensions.x-implements}}{{#-first}}implements {{{.}}}{{/-first}}{{^-first}}, {{{.}}}{{/-first}}{{/vendorExtensions.x-implements}} {
+  {{#vars}}
+  {{#isEnum}}
+  {{^isContainer}}
+  {{>enumClass}}
+  {{/isContainer}}
+  {{#isContainer}}
+  {{#mostInnerItems}}
+  {{>enumClass}}
+  {{/mostInnerItems}}
+  {{/isContainer}}
+  {{/isEnum}}
+  {{#vendorExtensions.x-field-extra-annotation}}
+  {{{vendorExtensions.x-field-extra-annotation}}}
+  {{/vendorExtensions.x-field-extra-annotation}}
+  {{#isContainer}}
+  private {{#useBeanValidation}}@Valid {{/useBeanValidation}}{{{datatypeWithEnum}}} {{name}}{{#required}}{{^isNullable}}{{#defaultValue}} = {{{.}}}{{/defaultValue}}{{/isNullable}}{{#isNullable}} = null{{/isNullable}}{{/required}}{{^required}} = null{{/required}};
+  {{/isContainer}}
+  {{^isContainer}}
+  private {{#useBeanValidation}}@Valid {{/useBeanValidation}}{{{datatypeWithEnum}}} {{name}}{{#defaultValue}} = {{{.}}}{{/defaultValue}};
+  {{/isContainer}}
+  {{/vars}}
+  {{#generateBuilders}}
+  {{^additionalProperties}}
+
+  protected {{classname}}({{classname}}Builder<?, ?> b) {
+    {{#parent}}
+    super(b);
+    {{/parent}}
+    {{#vars}}
+    this.{{name}} = b.{{name}};
+    {{/vars}}
+  }
+
+  public {{classname}}() {
+  }
+  {{/additionalProperties}}
+  {{/generateBuilders}}
+
+  {{#vars}}
+
+  {{#vendorExtensions.x-extra-annotation}}{{{vendorExtensions.x-extra-annotation}}}{{/vendorExtensions.x-extra-annotation}}{{#useSwaggerAnnotations}}
+  @Schema({{#example}}example = "{{{.}}}", {{/example}}{{#required}}required = {{required}}, {{/required}}description = "{{{description}}}", format="{{format}}"){{/useSwaggerAnnotations}}
+  @JsonProperty("{{baseName}}")
+{{#useBeanValidation}}{{>beanValidation}}{{/useBeanValidation}}  public {{>beanValidatedType}} {{getter}}() {
+    return {{name}};
+  }
+
+  @JsonProperty("{{baseName}}")
+  {{#vendorExtensions.x-setter-extra-annotation}}{{{vendorExtensions.x-setter-extra-annotation}}}
+  {{/vendorExtensions.x-setter-extra-annotation}}public void {{setter}}({{{datatypeWithEnum}}} {{name}}) {
+    this.{{name}} = {{name}};
+  }
+
+  {{#isArray}}
+  public {{classname}} add{{nameInCamelCase}}Item({{{items.datatypeWithEnum}}} {{name}}Item) {
+    if (this.{{name}} == null) {
+      this.{{name}} = {{{defaultValue}}};
+    }
+
+    this.{{name}}.add({{name}}Item);
+    return this;
+  }
+
+  public {{classname}} remove{{nameInCamelCase}}Item({{{items.datatypeWithEnum}}} {{name}}Item) {
+    if ({{name}}Item != null && this.{{name}} != null) {
+      this.{{name}}.remove({{name}}Item);
+    }
+
+    return this;
+  }
+  {{/isArray}}
+  {{#isMap}}
+  public {{classname}} put{{nameInCamelCase}}Item(String key, {{{items.datatypeWithEnum}}} {{name}}Item) {
+    if (this.{{name}} == null) {
+      this.{{name}} = {{{defaultValue}}};
+    }
+
+    this.{{name}}.put(key, {{name}}Item);
+    return this;
+  }
+
+  public {{classname}} remove{{nameInCamelCase}}Item({{{items.datatypeWithEnum}}} {{name}}Item) {
+    if ({{name}}Item != null && this.{{name}} != null) {
+      this.{{name}}.remove({{name}}Item);
+    }
+
+    return this;
+  }
+  {{/isMap}}
+  {{/vars}}
+
+}
