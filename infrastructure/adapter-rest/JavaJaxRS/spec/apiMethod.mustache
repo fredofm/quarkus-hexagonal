@@ -12,7 +12,7 @@
     })
     {{/implicitHeadersParams.0}}
     @APIResponses(value = { {{#responses}}
-        @APIResponse(responseCode = "{{{code}}}", description = "{{{message}}}", content = @Content(mediaType = {{#produces}}"{{{mediaType}}}"{{^-last}}, {{/-last}}{{/produces}}, schema = @Schema(type = SchemaType.{{#lambda.uppercase}}{{{schema.type}}}{{/lambda.uppercase}}, implementation = {{{returnBaseType}}}.class){{^-last}},{{/-last}}{{/responses}}))
+        @APIResponse(responseCode = "{{{code}}}", description = "{{{message}}}", content = @Content(mediaType = {{#produces}}"{{{mediaType}}}"{{^-last}}, {{/-last}}{{/produces}}, schema = @Schema(type = SchemaType.{{#isArray}}ARRAY{{/isArray}}{{#isModel}}OBJECT{{/isModel}}, implementation = {{{baseType}}}.class){{^-last}})),{{/-last}}{{/responses}}))
     })
     public {{#supportAsync}}CompletionStage<{{/supportAsync}}Response{{#supportAsync}}>{{/supportAsync}} {{nickname}}({{#allParams}}{{>queryParams}}{{>pathParams}}{{>cookieParams}}{{>headerParams}}{{>bodyParams}}{{>formParams}}{{^-last}},{{/-last}}{{/allParams}}) {
         return {{#supportAsync}}CompletableFuture.supplyAsync(() -> {{/supportAsync}}Response.ok().entity("magic!").build(){{#supportAsync}}){{/supportAsync}};

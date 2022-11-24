@@ -1,6 +1,6 @@
 openapi: '3.0.2'
 info:
-  title: API Title
+  title: Loans REST API
   version: '1.0'
   contact: 
     name: API Support
@@ -13,10 +13,11 @@ info:
 servers:
   - url: https://api.server.test/v1
 
-
 paths:
   /loans:
     get:
+      operationId: getAllLoans
+      description: Obtain information about a list of loans
       responses:
         '200':
           description:  Successfully returned a list of loans
@@ -28,6 +29,7 @@ paths:
                     $ref: '#/components/schemas/Loan'
   /loans/{id}:
     get:
+      operationId: getLoanById
       description: Obtain information about a loan from his unique id
       parameters:
         - name: id
@@ -35,35 +37,68 @@ paths:
           required: true
           schema:
             type: integer
+            format: int64
       responses:
         '200':
-          description:  Successfully returned a list of loans
+          description: Successfully returned a loan from his unique id
           content:
-              application/json:
-                schema:
-                  type: array
-                  items:
-                    $ref: '#/components/schemas/Loan'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Loan'
+        '404':
+          description: Resource not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseMessage'
+        '400':
+          description: Invalid request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseMessage'
 
 components:
   schemas:
+    ResponseMessage: 
+      type: object
+      description: Return messages to the client typically when a error occurs.
+      properties:
+        message:
+          type: string
+          description: Response message
     Loan: 
       type: object
-      description: test description.
+      description: Loan model for API layer
       required:
         - id
         - name
       properties:
         id:
           type: integer
-          description: test description
+          description: Unique identifier
           format: int64
-        name:
+        numberOfYears:
+          type: integer
+          description: Number of years
+          format: int32
+        loanAmount:
+          type: integer
+          description: Loan amount
+          format: int64
+        annualInterestRate:
+          type: number
+          description: Annual interest rate
+          format: double
+        userId:
+          type: integer
+          description: Unique user identifier
+          format: int64
+        loanDate:
           type: string
-          description: test description
-          format: url
-        running:
-          type: boolean
+          format: date-time
+          description: Loan date as defined by date-time - RFC3339
+            
   # Basic authentication
   securitySchemes:
     BasicAuth:

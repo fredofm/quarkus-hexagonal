@@ -47,7 +47,7 @@ public class PropResource {
         @Path("/{id}")
         @APIResponse(responseCode = "200", description = "Get prop by id", content = @Content(mediaType = MediaType.APPLICATION_JSON, schema = @Schema(type = SchemaType.OBJECT, implementation = PropDto.class)))
         @APIResponse(responseCode = "204", description = "Prop does not exist for id", content = @Content(mediaType = MediaType.APPLICATION_JSON))
-        public PropDto getProp(@PathParam("id") Long id) {                
+        public PropDto getProp(@PathParam("id") Long id) {                                
                 return propMapper.toDto(propService.getProp(id));
         }
 
