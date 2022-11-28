@@ -3,7 +3,7 @@ package dxc.microservice.quarkus.infrastructure.db.dynamodb.config;
 import javax.enterprise.context.ApplicationScoped;
 import javax.enterprise.inject.Produces;
 
-import dxc.microservice.quarkus.infrastructure.db.dynamodb.dbo.PropEntity;
+import dxc.microservice.quarkus.infrastructure.db.dynamodb.dbo.LoanEntity;
 import software.amazon.awssdk.enhanced.dynamodb.DynamoDbEnhancedClient;
 import software.amazon.awssdk.enhanced.dynamodb.DynamoDbTable;
 import software.amazon.awssdk.enhanced.dynamodb.TableSchema;
@@ -12,8 +12,8 @@ import software.amazon.awssdk.enhanced.dynamodb.TableSchema;
 public class DynamoDBConfig {
 
     @Produces
-    public DynamoDbTable<PropEntity> propTable(DynamoDbEnhancedClient enhancedClient) {
-        TableSchema<PropEntity> tableSchema = TableSchema.fromBean(PropEntity.class);
-        return enhancedClient.table("props", tableSchema);
+    public DynamoDbTable<LoanEntity> propTable(DynamoDbEnhancedClient enhancedClient) {
+        TableSchema<LoanEntity> tableSchema = TableSchema.fromBean(LoanEntity.class);
+        return enhancedClient.table(LoanEntity.TABLE_NAME, tableSchema);
     }
 }

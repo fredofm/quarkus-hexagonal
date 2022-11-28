@@ -14,8 +14,8 @@
     @APIResponses(value = { {{#responses}}
         @APIResponse(responseCode = "{{{code}}}", description = "{{{message}}}", content = @Content(mediaType = {{#produces}}"{{{mediaType}}}"{{^-last}}, {{/-last}}{{/produces}}, schema = @Schema(type = SchemaType.{{#isArray}}ARRAY{{/isArray}}{{#isModel}}OBJECT{{/isModel}}, implementation = {{{baseType}}}.class){{^-last}})),{{/-last}}{{/responses}}))
     })
-    public {{#supportAsync}}CompletionStage<{{/supportAsync}}Response{{#supportAsync}}>{{/supportAsync}} {{nickname}}({{#allParams}}{{>queryParams}}{{>pathParams}}{{>cookieParams}}{{>headerParams}}{{>bodyParams}}{{>formParams}}{{^-last}},{{/-last}}{{/allParams}}) {
-        return {{#supportAsync}}CompletableFuture.supplyAsync(() -> {{/supportAsync}}Response.ok().entity("magic!").build(){{#supportAsync}}){{/supportAsync}};
+    {{#interfaceOnly}}default{{/interfaceOnly}}{{^interfaceOnly}}public{{/interfaceOnly}} {{#supportAsync}}CompletionStage<{{/supportAsync}}Response{{#supportAsync}}>{{/supportAsync}} {{nickname}}({{#allParams}}{{>queryParams}}{{>pathParams}}{{>cookieParams}}{{>headerParams}}{{>bodyParams}}{{>formParams}}{{^-last}},{{/-last}}{{/allParams}}) {
+        return {{#supportAsync}}CompletableFuture.supplyAsync(() -> {{/supportAsync}}do{{#lambda.titlecase}}{{nickname}}{{/lambda.titlecase}}({{#allParams}}{{paramName}}{{^-last}},{{/-last}}{{/allParams}}){{#supportAsync}}){{/supportAsync}};
     }
 
-    protected abstract Response do{{#lambda.titlecase}}{{nickname}}{{/lambda.titlecase}}({{#allParams}}{{>queryParams}}{{>pathParams}}{{>cookieParams}}{{>headerParams}}{{>bodyParams}}{{>formParams}}{{^-last}},{{/-last}}{{/allParams}});
+    {{#interfaceOnly}}public{{/interfaceOnly}}{{^interfaceOnly}}protected abstract{{/interfaceOnly}} Response do{{#lambda.titlecase}}{{nickname}}{{/lambda.titlecase}}({{#allParams}}{{dataType}} {{paramName}}{{^-last}},{{/-last}}{{/allParams}});

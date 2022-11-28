@@ -1,5 +1,8 @@
 package dxc.microservice.quarkus.infrastructure.db.dynamodb.dbo;
 
+import java.time.Instant;
+import java.util.Date;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -12,14 +15,23 @@ import software.amazon.awssdk.enhanced.dynamodb.mapper.annotations.DynamoDbParti
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class PropEntity {
+public class LoanEntity {
+    public static final String TABLE_NAME = "loans";
 
-    private Long id;
-    private boolean running;
-    private String name;
+    private String id;
+
+    private Integer numberOfYears;
+    
+    private Long loanAmount;
+
+    private Double annualInterestRate;
+
+    private Instant loanDate;
+
+    private Long userId;
 
     @DynamoDbPartitionKey    
-    public Long getId() {
+    public String getId() {
         return id;        
     }    
 }

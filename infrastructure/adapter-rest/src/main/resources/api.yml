@@ -11,7 +11,7 @@ info:
     url: https://www.apache.org/licenses/LICENSE-2.0.html
   
 servers:
-  - url: https://api.server.test/v1
+  - url: /api/v1
 
 paths:
   /loans:
@@ -27,6 +27,21 @@ paths:
                   type: array
                   items:
                     $ref: '#/components/schemas/Loan'
+    post:
+      operationId: createLoan
+      description: Create a new loan
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Loan"
+      responses:
+        200:
+          content:
+              application/json:
+                schema:
+                  $ref: "#/components/schemas/Loan"
+          description: "New loan created successfully"
   /loans/{id}:
     get:
       operationId: getLoanById
@@ -36,8 +51,8 @@ paths:
           in: path
           required: true
           schema:
-            type: integer
-            format: int64
+            type: string
+            format: uuid
       responses:
         '200':
           description: Successfully returned a loan from his unique id
@@ -50,23 +65,47 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ResponseMessage'
+                $ref: '#/components/schemas/ResponseError'
         '400':
           description: Invalid request
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ResponseMessage'
-
+                $ref: '#/components/schemas/ResponseError'
+    delete:
+      operationId: deleteLoanById
+      description: Obtain information about a loan from his unique id
+      parameters:
+          - in: path
+            name: id
+            required: true
+            schema:
+                type: string
+                format: uuid
+      responses:
+          204:
+            description: "Loan deleted successfully"
+            content:
+                application/json:
+                  schema:
+                    $ref: '#/components/schemas/ResponseMessage'
+            
 components:
   schemas:
     ResponseMessage: 
       type: object
-      description: Return messages to the client typically when a error occurs.
+      description: Return messages to the client.
       properties:
         message:
           type: string
           description: Response message
+    ResponseError: 
+      type: object
+      description: Return messages to the client typically when a error occurs.
+      properties:
+        error:
+          type: string
+          description: Response error
     Loan: 
       type: object
       description: Loan model for API layer
@@ -75,9 +114,9 @@ components:
         - name
       properties:
         id:
-          type: integer
+          type: string
           description: Unique identifier
-          format: int64
+          format: uuid
         numberOfYears:
           type: integer
           description: Number of years

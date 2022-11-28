@@ -1,10 +1,15 @@
 package dxc.microservice.quarkus.infrastructure.db.dynamodb.config;
 
+import java.time.Instant;
+import java.time.LocalDate;
+import java.util.Date;
+import java.util.UUID;
+
 import javax.enterprise.context.ApplicationScoped;
 import javax.enterprise.event.Observes;
 import javax.inject.Inject;
 
-import dxc.microservice.quarkus.infrastructure.db.dynamodb.dbo.PropEntity;
+import dxc.microservice.quarkus.infrastructure.db.dynamodb.dbo.LoanEntity;
 import io.quarkus.arc.profile.UnlessBuildProfile;
 import io.quarkus.runtime.StartupEvent;
 import lombok.extern.slf4j.Slf4j;
@@ -19,7 +24,7 @@ import software.amazon.awssdk.services.dynamodb.model.ResourceNotFoundException;
 @UnlessBuildProfile("prod")
 @Slf4j
 public class DevBootstrap {
-    private static final String PROPS_TABLE = "props";
+    private static final String LOANS_TABLE = LoanEntity.TABLE_NAME;
 
     @Inject
     DynamoDbClient dynamoDbClient;
@@ -27,40 +32,53 @@ public class DevBootstrap {
     void onStart(@Observes StartupEvent ev) {
         log.info("Bootstrapping dynamodb database");
 
-        if (!tableExists(PROPS_TABLE)) {
-            DynamoDbTable<PropEntity> propTable = createTable(PROPS_TABLE);
+        if (!tableExists(LOANS_TABLE)) {
+            DynamoDbTable<LoanEntity> loansTable = createTable(LOANS_TABLE);
 
-            populateTable(propTable);
+            populateTable(loansTable);
         }
     }
 
-    private void populateTable(DynamoDbTable<PropEntity> propTable) {
-        log.info("Populating dynamodb table {}", propTable.tableName());
+    private void populateTable(DynamoDbTable<LoanEntity> loansTable) {
+        log.info("Populating dynamodb table {}", loansTable.tableName());
 
-        propTable.putItem(PropEntity.builder().id(1L).name("name 1").running(false).build());
-        propTable.putItem(PropEntity.builder().id(2L).name("name 2").running(true).build());
+        loansTable.putItem(LoanEntity.builder().id(UUID.randomUUID().toString())
+                .annualInterestRate(2.15)
+                .loanAmount(130000L)
+                .numberOfYears(30)
+                .loanDate(Instant.now())
+                .userId(1L)
+                .build());
+
+        loansTable.putItem(LoanEntity.builder().id(UUID.randomUUID().toString())
+                .annualInterestRate(2.15)
+                .loanAmount(45000L)
+                .numberOfYears(15)
+                .loanDate(Instant.now())
+                .userId(1L)
+                .build());
     }
 
-    private DynamoDbTable<PropEntity> createTable(String tableName) {
+    private DynamoDbTable<LoanEntity> createTable(String tableName) {
         log.info("Creating dynamodb table {}", tableName);
 
         DynamoDbEnhancedClient dynamoDbEnhancedClient = DynamoDbEnhancedClient.builder().dynamoDbClient(dynamoDbClient)
                 .build();
 
-        TableSchema<PropEntity> tableSchema = TableSchema.fromClass(PropEntity.class);
-        DynamoDbTable<PropEntity> propTable = dynamoDbEnhancedClient.table(PROPS_TABLE, tableSchema);
-        propTable.createTable();
+        TableSchema<LoanEntity> tableSchema = TableSchema.fromClass(LoanEntity.class);
+        DynamoDbTable<LoanEntity> loansTable = dynamoDbEnhancedClient.table(LOANS_TABLE, tableSchema);
+        loansTable.createTable();
 
-        dynamoDbClient.waiter().waitUntilTableExists(b -> b.tableName(PROPS_TABLE));
+        dynamoDbClient.waiter().waitUntilTableExists(b -> b.tableName(LOANS_TABLE));
 
-        return propTable;
+        return loansTable;
     }
 
     private boolean tableExists(String tableName) {
         boolean tableExists = false;
         DynamoDbEnhancedClient dynamoDbEnhancedClient = DynamoDbEnhancedClient.builder().dynamoDbClient(dynamoDbClient)
                 .build();
-        TableSchema<PropEntity> tableSchema = TableSchema.fromClass(PropEntity.class);
+        TableSchema<LoanEntity> tableSchema = TableSchema.fromClass(LoanEntity.class);
 
         try {
             DescribeTableEnhancedResponse tableDescription = dynamoDbEnhancedClient.table(tableName, tableSchema)

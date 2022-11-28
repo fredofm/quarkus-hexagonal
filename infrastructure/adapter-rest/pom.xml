@@ -77,6 +77,10 @@
             <groupId>org.mapstruct</groupId>
             <artifactId>mapstruct</artifactId>
         </dependency>
+        <dependency>
+            <groupId>org.mapstruct</groupId>
+            <artifactId>mapstruct-processor</artifactId>
+        </dependency>
     </dependencies>
 
     <build>
@@ -97,25 +101,28 @@
                         <configuration>
                             <inputSpec>${project.basedir}/src/main/resources/api.yml</inputSpec>
                             <generatorName>jaxrs-spec</generatorName>
-                            <additionalProperties></additionalProperties>
+                            <additionalProperties>basePathAPI=/api/v1</additionalProperties>
                             <supportingFilesToGenerate>false</supportingFilesToGenerate>
                             <generateApis>true</generateApis>
                             <modelNameSuffix>DTO</modelNameSuffix>
                             <apiNameSuffix>API</apiNameSuffix>
-                            <templateDirectory>JavaJaxRS/spec</templateDirectory>  
-                            <!-- <configHelp>true</configHelp> -->                                                     
+                            <templateDirectory>JavaJaxRS/spec</templateDirectory>
+                            <!-- <configHelp>true</configHelp> -->
                             <configOptions>
                                 <modelPackage>dxc.micrservice.quarkus.infrastructure.rest.dto</modelPackage>
                                 <apiPackage>dxc.micrservice.quarkus.infrastructure.rest.api</apiPackage>
                                 <packageName>dxc.micrservice.quarkus.infrastructure.rest</packageName>
                                 <useSwaggerAnnotations>true</useSwaggerAnnotations>
+                                <additionalModelTypeAnnotations>@lombok.Builder</additionalModelTypeAnnotations>                                
                                 <library>quarkus</library>
+                                <interfaceOnly>true</interfaceOnly>
+                                <returnResponse>true</returnResponse>
                                 <sourceFolder>src/java</sourceFolder>
                                 <implFolder>src/java</implFolder>
                                 <useBeanValidation>false</useBeanValidation>
                                 <skipValidateSpec>false</skipValidateSpec>
                                 <removeOperationIdPrefix>true</removeOperationIdPrefix>
-                                <generateModelDocumentation>true</generateModelDocumentation>   
+                                <generateModelDocumentation>true</generateModelDocumentation>
                                 <generateApiDocumentation>true</generateApiDocumentation>
                             </configOptions>
                         </configuration>

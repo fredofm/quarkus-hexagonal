@@ -1,33 +1,36 @@
-create table PropEntity (
+create table LoanEntity (
 	id int8 not null,
-	name varchar(255),
-	running boolean not null,
+	annualInterestRate float8,
+	loanAmount int8,
+	loanDate date,
+	numberOfYears int4,
+	userId int8
 	primary key (id)
 );
 
 create sequence hibernate_sequence start 1 increment 1;
 
 INSERT INTO
-	propentity(id, name, running)
+	loanentity(id, annualInterestRate, loanAmount, loanDate, numberOfYears, userId)
 VALUES
-	(1, 'Prop 1', false);
+	(1, 0.15, 10000, NOW(), 10, 1);
 
 INSERT INTO
-	propentity(id, name, running)
+	loanentity(id, annualInterestRate, loanAmount, loanDate, numberOfYears, userId)
 VALUES
-	(2, 'Prop 2', false);
+	(2, 0.15, 30000, NOW(), 15, 1);
 
 INSERT INTO
-	propentity(id, name, running)
+	loanentity(id, annualInterestRate, loanAmount, loanDate, numberOfYears, userId)
 VALUES
-	(3, 'Prop 3', false);
+	(3, 0.15, 40000, NOW(), 20, 2);
 
 INSERT INTO
-	propentity(id, name, running)
+	loanentity(id, annualInterestRate, loanAmount, loanDate, numberOfYears, userId)
 VALUES
-	(4, 'Prop 4', false);
+	(4, 0.15, 10000, NOW(), 3, 2);
 
 INSERT INTO
-	propentity(id, name, running)
+	loanentity(id, annualInterestRate, loanAmount, loanDate, numberOfYears, userId)
 VALUES
-	(5, 'Prop 5', false);
+	(5, 2.15, 130000, NOW(), 30, 3);

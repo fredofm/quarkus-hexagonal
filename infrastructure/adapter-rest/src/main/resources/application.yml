@@ -1,0 +1,17 @@
+
+project:
+  api:
+    loans:
+      basepath: /api/v1
+
+
+"%test":
+  quarkus:  
+    log:          
+      category:
+        "dxc.microservice.quarkus":
+          level: DEBUG
+      file:
+        enable: true
+        path: target/quarkus-rest-adapter-tests.log
+        level: ALL  

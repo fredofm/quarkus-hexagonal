@@ -24,7 +24,7 @@ quarkus:
     vault:
       devservices:
         init-commands: 'kv put secret/config password="p@$$w0rd"'
-        port: 54995
+        #port: 54995
 
     log:
       category:

@@ -1,5 +1,6 @@
 import java.util.Objects;
 import java.util.Date;
+import java.util.UUID;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
@@ -12,7 +13,8 @@ import org.eclipse.microprofile.openapi.annotations.media.Schema;
  **/{{/description}}
 {{#useSwaggerAnnotations}}{{#description}}@Schema(description = "{{{.}}}"{{/description}}, name="{{classname}}"){{/useSwaggerAnnotations}}
 @JsonTypeName("{{name}}")
-{{>generatedAnnotation}}{{>additionalModelTypeAnnotations}}
+{{>generatedAnnotation}}
+{{>additionalModelTypeAnnotations}}
 {{#vendorExtensions.x-class-extra-annotation}}
 {{{vendorExtensions.x-class-extra-annotation}}}
 {{/vendorExtensions.x-class-extra-annotation}}

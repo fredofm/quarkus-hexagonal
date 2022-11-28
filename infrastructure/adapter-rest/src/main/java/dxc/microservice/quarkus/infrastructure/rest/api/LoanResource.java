@@ -1,32 +1,91 @@
 package dxc.microservice.quarkus.infrastructure.rest.api;
 
+import java.util.UUID;
+import java.util.stream.Collectors;
+
+import javax.enterprise.context.ApplicationScoped;
+import javax.inject.Inject;
 import javax.ws.rs.core.Response;
 
-import dxc.microservice.quarkus.application.service.IProperService;
-import dxc.microservice.quarkus.infrastructure.rest.mapper.LoanMapper;
+import dxc.microservice.quarkus.application.service.ILoanService;
+import dxc.microservice.quarkus.domain.model.Loan;
+import dxc.microservice.quarkus.infrastructure.rest.mapper.LoanDTOMapper;
 import dxc.micrservice.quarkus.infrastructure.rest.api.LoansAPI;
+import dxc.micrservice.quarkus.infrastructure.rest.dto.LoanDTO;
+import dxc.micrservice.quarkus.infrastructure.rest.dto.ResponseMessageDTO;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 @AllArgsConstructor
-@NoArgsConstructor
 @Slf4j
-public class LoanResource extends LoansAPI{
+public class LoanResource implements LoansAPI{
 
-    IProperService propService;
+    ILoanService loanService;
 
-    LoanMapper loanMapper;
+    LoanDTOMapper loanMapper;
 
     @Override
-    protected Response doGetAllLoans() {
-        // TODO Auto-generated method stub
-        return null;
+    public Response doGetAllLoans() {
+        log.debug("doGetAllLoans()");
+        return Response.ok(loanService.getAllLoans().stream().map(p -> loanMapper.toDto(p)).collect(Collectors.toList())).build();
     }
 
     @Override
-    protected Response doGetLoanById(Long id) {        
-        // TODO Auto-generated method stub
-        return null;
+    public Response doGetLoanById(UUID id) {        
+        log.debug("doGetLoanById({})", id);
+
+        Loan loan = loanService.getLoan(id.toString());
+        Response response;
+
+        if(null == loan) {
+            response = Response.status(Response.Status.NOT_FOUND).build();
+        } else {
+            response = Response.ok(loanMapper.toDto(loan)).build();
+        }
+
+        return response;
+    }
+
+    @Override
+    public Response doCreateLoan(LoanDTO loanDTO) {
+        log.debug("doCreateLoan({})", loanDTO);
+
+        loanService.create(loanMapper.toDomain(loanDTO));
+
+        ResponseMessageDTO response = ResponseMessageDTO.builder().message("Loan created successfully").build();
+
+        return Response.ok(response).build();
+    }
+
+    @Override
+    public Response doDeleteLoanById(UUID id) {
+        log.debug("doDeleteLoanById({})", id);
+
+        loanService.deleteLoan(id.toString());
+
+        ResponseMessageDTO response = ResponseMessageDTO.builder().message("Loan deleted successfully").build();
+
+        return Response.ok(response).build();
     }    
+
+    /* 
+     * @POST
+        @APIResponse(responseCode = "201", description = "Prop Created", content = @Content(mediaType = MediaType.APPLICATION_JSON, schema = @Schema(type = SchemaType.OBJECT, implementation = PropDto.class)))
+        @APIResponse(responseCode = "400", description = "Invalid Prop", content = @Content(mediaType = MediaType.APPLICATION_JSON))
+        @APIResponse(responseCode = "400", description = "Prop already exists", content = @Content(mediaType = MediaType.APPLICATION_JSON))
+        public Response post(@NotNull @Valid PropDto prop, @Context UriInfo uriInfo) {
+                if (null != prop.getId() && null != propService.getLoan(prop.getId())) {
+                        log.warn("Prop with id {} already exists. Skipping creation.", prop.getId());
+                        return Response.status(Response.Status.BAD_REQUEST).build();
+                }
+
+                Loan propDomain = propMapper.toDomain(prop);
+                propService.create(propDomain);
+                PropDto propDto = propMapper.toDto(propDomain);
+                URI uri = uriInfo.getAbsolutePathBuilder().path(Long.toString(propDto.getId())).build();
+
+                return Response.created(uri).entity(propDto).build();
+     * 
+     */
 }
