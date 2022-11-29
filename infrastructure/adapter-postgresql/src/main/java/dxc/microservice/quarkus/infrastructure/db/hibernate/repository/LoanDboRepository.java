@@ -5,6 +5,7 @@ import java.util.UUID;
 import java.util.stream.Collectors;
 
 import javax.enterprise.context.ApplicationScoped;
+import javax.transaction.Transactional;
 
 import dxc.microservice.quarkus.application.repository.ILoanRepository;
 import dxc.microservice.quarkus.domain.model.Loan;
@@ -32,6 +33,7 @@ public class LoanDboRepository implements ILoanRepository {
     }
 
     @Override
+    @Transactional
     public void save(Loan loan) {
         LoanEntity entity = loanMapper.toDbo(loan);
         entity.setId(UUID.randomUUID().toString());
@@ -40,6 +42,7 @@ public class LoanDboRepository implements ILoanRepository {
     }
 
     @Override
+    @Transactional
     public void update(Loan loan) {        
         LoanEntity entity = repository.findByIdOptional(loan.getId())
                 .orElseThrow(() -> new DboException("No loan found for loan Id [%s]", loan.getId()));
@@ -49,6 +52,7 @@ public class LoanDboRepository implements ILoanRepository {
     }
 
     @Override
+    @Transactional
     public void delete(String id) {
         repository.deleteById(id);
     }

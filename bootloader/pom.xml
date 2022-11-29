@@ -43,7 +43,7 @@
       <artifactId>adapter-dynamodb</artifactId>
       <version>0.0.1-SNAPSHOT</version>
     </dependency>
-   <!--  <dependency>
+    <!-- <dependency>
       <groupId>dxc.microservice.quarkus</groupId>
       <artifactId>adapter-postgresql</artifactId>
       <version>0.0.1-SNAPSHOT</version>

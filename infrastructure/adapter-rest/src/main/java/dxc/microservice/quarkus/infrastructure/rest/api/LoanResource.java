@@ -3,8 +3,6 @@ package dxc.microservice.quarkus.infrastructure.rest.api;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
-import javax.enterprise.context.ApplicationScoped;
-import javax.inject.Inject;
 import javax.ws.rs.core.Response;
 
 import dxc.microservice.quarkus.application.service.ILoanService;
@@ -14,7 +12,6 @@ import dxc.micrservice.quarkus.infrastructure.rest.api.LoansAPI;
 import dxc.micrservice.quarkus.infrastructure.rest.dto.LoanDTO;
 import dxc.micrservice.quarkus.infrastructure.rest.dto.ResponseMessageDTO;
 import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 @AllArgsConstructor
