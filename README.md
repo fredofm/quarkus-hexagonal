@@ -35,6 +35,8 @@ Maven Multi-module project to illustrate how to structure a project based on an 
 | [Resteasy](https://quarkus.io/guides/rest-json) | Annotation based Rest controllers with JSON serialization / desearialization |
 | [rest-assured](https://rest-assured.io/) | Testing and validating REST services |
 | [smallrye-openapi](https://github.com/smallrye/smallrye-open-api) | Add OpenAPI spec to the project and helps with the generation of both schema and Swagger UI |
+| [OpenAPI](https://github.com/OAI/OpenAPI-Specification) | The OpenAPI Specification, previously known as the Swagger Specification, is a specification for a machine-readable interface definition language for describing, producing, consuming and visualizing RESTful web services. |
+| [openapi-generator-maven-plugin](https://github.com/OpenAPITools/openapi-generator/tree/master/modules/openapi-generator-maven-plugin) | A Maven plugin to support the [OpenAPI generator project](https://github.com/OpenAPITools/openapi-generator). |
 
 ### Kafka adapter
 
