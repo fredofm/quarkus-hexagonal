@@ -1,8 +1,8 @@
-# About
+# 👋 About
 
 Maven Multi-module project to illustrate how to structure a project based on an hexagonal architecture.
 
-## Technologies
+## ⚙️ Technologies
 
 ### Common
 
@@ -44,9 +44,9 @@ Maven Multi-module project to illustrate how to structure a project based on an 
 | ---------- |----------|
 | TBC | TBC |
 
-## How to execute the application
+## 🚀 How to execute the application
 
-### DEV mode
+### 🛠️ DEV mode
 
 Compile, test, package and install the different artifacts in your local maven repository.
 
@@ -66,7 +66,7 @@ This project is using [dev services](https://quarkus.io/guides/dev-services) to 
 
 > In order to use Dev Services you will generally need a working Docker environment (remote environments are supported). If you don’t have Docker installed you will need to configure your services normally.
 
-### PROD mode
+### 📦 PROD mode
 
 You will need to package the `bootloader` module:
 
