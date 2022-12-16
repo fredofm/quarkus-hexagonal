@@ -1,10 +1,10 @@
-package dxc.microservice.quarkus.application.service;
+package dxc.microservice.quarkus.application.ports.api;
 
 import java.util.List;
 
-import dxc.microservice.quarkus.domain.model.Loan;
+import dxc.microservice.quarkus.domain.model.loan.Loan;
 
-public interface ILoanService {
+public interface LoanAPIUseCase {
 
     public Loan getLoan(String id);
 

@@ -6,8 +6,8 @@ import java.util.stream.Collectors;
 
 import javax.enterprise.context.ApplicationScoped;
 
-import dxc.microservice.quarkus.application.repository.ILoanRepository;
-import dxc.microservice.quarkus.domain.model.Loan;
+import dxc.microservice.quarkus.domain.model.loan.Loan;
+import dxc.microservice.quarkus.domain.ports.spi.LoanRepository;
 import dxc.microservice.quarkus.infrastructure.db.dynamodb.dbo.LoanEntity;
 import dxc.microservice.quarkus.infrastructure.db.dynamodb.exceptions.DboException;
 import dxc.microservice.quarkus.infrastructure.db.dynamodb.mapper.LoanEntityMapper;
@@ -17,7 +17,7 @@ import software.amazon.awssdk.enhanced.dynamodb.Key;
 
 @ApplicationScoped
 @AllArgsConstructor
-public class LoanDboRepository implements ILoanRepository {
+public class LoanDboRepository implements LoanRepository {
 
     DynamoDbTable<LoanEntity> loanTable;
 
@@ -35,16 +35,16 @@ public class LoanDboRepository implements ILoanRepository {
     }
 
     @Override
-    public void save(Loan loan) {
-        loan.setId(UUID.randomUUID().toString());
+    public void save(Loan loan) {        
         LoanEntity entity = loanMapper.toDbo(loan);
+        entity.setId(nextLoanId());
 
         loanTable.putItem(entity);
     }
 
     @Override
     public void update(Loan loan) {
-        Key partitionKey = Key.builder().partitionValue(loan.getId()).build();
+        Key partitionKey = Key.builder().partitionValue(loan.getId().getId()).build();
 
         LoanEntity entity = loanTable.getItem(partitionKey);
 
@@ -60,5 +60,10 @@ public class LoanDboRepository implements ILoanRepository {
         Key partitionKey = Key.builder().partitionValue(id).build();
 
         loanTable.deleteItem(partitionKey);
+    }
+
+    @Override
+    public String nextLoanId() {
+        return UUID.randomUUID().toString();
     }
 }

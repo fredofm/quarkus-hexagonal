@@ -19,6 +19,7 @@
     <modules>
         <module>adapter-postgresql</module>
         <module>adapter-dynamodb</module>
-        <module>adapter-rest</module>        
+        <module>adapter-rest</module>
+        <module>adapter-kafka</module>        
     </modules>
 </project>

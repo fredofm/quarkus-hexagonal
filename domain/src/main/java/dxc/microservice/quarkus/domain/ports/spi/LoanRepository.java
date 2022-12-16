@@ -1,10 +1,10 @@
-package dxc.microservice.quarkus.application.repository;
+package dxc.microservice.quarkus.domain.ports.spi;
 
 import java.util.List;
 
-import dxc.microservice.quarkus.domain.model.Loan;
+import dxc.microservice.quarkus.domain.model.loan.Loan;
 
-public interface ILoanRepository {
+public interface LoanRepository {
     
     List<Loan> getAll();
 
@@ -15,4 +15,6 @@ public interface ILoanRepository {
     void update(Loan prop);
 
     void delete(String id);
+
+    String nextLoanId();
 }

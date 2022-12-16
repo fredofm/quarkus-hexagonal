@@ -71,7 +71,11 @@
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
         </dependency>
-
+       <!--  <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok-mapstruct-binding</artifactId>
+        </dependency>
+ -->
         <!-- Utility for easy annotation based mapper creation -->
         <dependency>
             <groupId>org.mapstruct</groupId>
@@ -81,6 +85,7 @@
             <groupId>org.mapstruct</groupId>
             <artifactId>mapstruct-processor</artifactId>
         </dependency>
+        
     </dependencies>
 
     <build>

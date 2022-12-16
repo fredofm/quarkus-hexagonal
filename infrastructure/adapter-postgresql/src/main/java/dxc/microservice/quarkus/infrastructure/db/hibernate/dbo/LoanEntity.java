@@ -26,5 +26,5 @@ public class LoanEntity {
 
     private Date loanDate;
 
-    private Long userId;
+    private String userId;
 }

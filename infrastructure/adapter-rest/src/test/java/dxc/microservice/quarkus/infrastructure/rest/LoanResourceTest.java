@@ -11,9 +11,10 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
-import dxc.microservice.quarkus.application.repository.ILoanRepository;
-import dxc.microservice.quarkus.application.service.ILoanService;
-import dxc.microservice.quarkus.domain.model.Loan;
+import dxc.microservice.quarkus.application.ports.api.LoanAPIUseCase;
+import dxc.microservice.quarkus.domain.model.loan.Loan;
+import dxc.microservice.quarkus.domain.model.loan.LoanId;
+import dxc.microservice.quarkus.domain.ports.spi.LoanRepository;
 import dxc.micrservice.quarkus.infrastructure.rest.dto.LoanDTO;
 import io.quarkus.test.Mock;
 import io.quarkus.test.junit.QuarkusTest;
@@ -24,14 +25,15 @@ public class LoanResourceTest {
 
   @Mock
   @Produces
-  ILoanRepository loanRepository;
+  LoanRepository loanRepository;
 
   @InjectMock
-  ILoanService loanService;
+  LoanAPIUseCase loanService;
 
   @BeforeEach
   public void testPrepare() {
-    Loan dummyProp = Loan.builder().id("4d3f3d2e-fb28-4315-a20c-a9975aa0cdc3")
+    LoanId loanId = LoanId.builder().id("4d3f3d2e-fb28-4315-a20c-a9975aa0cdc3").build();
+    Loan dummyProp = Loan.builder().id(loanId)
                                    .annualInterestRate(1.15)
                                    .loanAmount(10000)
                                    .loanDate(new Date())

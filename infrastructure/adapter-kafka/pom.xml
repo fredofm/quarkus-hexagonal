@@ -10,9 +10,9 @@
         <version>0.0.1-SNAPSHOT</version>
     </parent>
 
-    <artifactId>adapter-postgresql</artifactId>
-    <name>Hibernate Postgresql Adapter</name>
-    <description>Hibernate Postgresql Adapter implementation</description>
+    <artifactId>adapter-kafka</artifactId>
+    <name>Kafka Adapter</name>
+    <description>Kafka Adapter implementation</description>
 
     <dependencies>
         <dependency>
@@ -21,22 +21,17 @@
             <version>0.0.1-SNAPSHOT</version>
         </dependency>
 
-        <!-- Flyway specific dependencies -->
+        <!-- Quarkus provides support for Apache Kafka through SmallRye Reactive Messaging framework -->
         <dependency>
             <groupId>io.quarkus</groupId>
-            <artifactId>quarkus-flyway</artifactId>
+            <artifactId>quarkus-smallrye-reactive-messaging-kafka</artifactId>
         </dependency>
 
-        <!-- Hibernate ORM specific dependencies -->
+        <!-- Easier way of interacting with a Kafka broker and, creating consumer, producer and admin actions inside tests, when using Dev Services -->
         <dependency>
             <groupId>io.quarkus</groupId>
-            <artifactId>quarkus-hibernate-orm-panache</artifactId>
-        </dependency>
-
-        <!-- JDBC driver dependencies -->
-        <dependency>
-            <groupId>io.quarkus</groupId>
-            <artifactId>quarkus-jdbc-postgresql</artifactId>
+            <artifactId>quarkus-test-kafka-companion</artifactId>
+            <scope>test</scope>
         </dependency>
 
         <!-- Quarkus CDI based build-time dependency injection -->
@@ -69,10 +64,6 @@
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.projectlombok</groupId>
-            <artifactId>lombok-mapstruct-binding</artifactId>
         </dependency>
 
         <!-- Utility for easy annotation based mapper creation -->

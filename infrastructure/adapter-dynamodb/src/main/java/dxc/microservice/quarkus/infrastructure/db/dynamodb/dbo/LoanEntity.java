@@ -1,7 +1,6 @@
 package dxc.microservice.quarkus.infrastructure.db.dynamodb.dbo;
 
 import java.time.Instant;
-import java.util.Date;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -28,7 +27,7 @@ public class LoanEntity {
 
     private Instant loanDate;
 
-    private Long userId;
+    private String userId;
 
     @DynamoDbPartitionKey    
     public String getId() {

@@ -1,8 +1,6 @@
 package dxc.microservice.quarkus.infrastructure.db.dynamodb.config;
 
 import java.time.Instant;
-import java.time.LocalDate;
-import java.util.Date;
 import java.util.UUID;
 
 import javax.enterprise.context.ApplicationScoped;
@@ -47,7 +45,7 @@ public class DevBootstrap {
                 .loanAmount(130000L)
                 .numberOfYears(30)
                 .loanDate(Instant.now())
-                .userId(1L)
+                .userId(UUID.randomUUID().toString())
                 .build());
 
         loansTable.putItem(LoanEntity.builder().id(UUID.randomUUID().toString())
@@ -55,7 +53,7 @@ public class DevBootstrap {
                 .loanAmount(45000L)
                 .numberOfYears(15)
                 .loanDate(Instant.now())
-                .userId(1L)
+                .userId(UUID.randomUUID().toString())
                 .build());
     }
 

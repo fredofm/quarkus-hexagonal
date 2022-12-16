@@ -5,8 +5,8 @@ import java.util.stream.Collectors;
 
 import javax.ws.rs.core.Response;
 
-import dxc.microservice.quarkus.application.service.ILoanService;
-import dxc.microservice.quarkus.domain.model.Loan;
+import dxc.microservice.quarkus.application.ports.api.LoanAPIUseCase;
+import dxc.microservice.quarkus.domain.model.loan.Loan;
 import dxc.microservice.quarkus.infrastructure.rest.mapper.LoanDTOMapper;
 import dxc.micrservice.quarkus.infrastructure.rest.api.LoansAPI;
 import dxc.micrservice.quarkus.infrastructure.rest.dto.LoanDTO;
@@ -18,7 +18,7 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class LoanResource implements LoansAPI{
 
-    ILoanService loanService;
+    LoanAPIUseCase loanService;
 
     LoanDTOMapper loanMapper;
 

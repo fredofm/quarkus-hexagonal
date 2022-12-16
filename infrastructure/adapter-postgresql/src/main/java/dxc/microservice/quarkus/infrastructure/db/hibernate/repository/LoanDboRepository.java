@@ -7,8 +7,8 @@ import java.util.stream.Collectors;
 import javax.enterprise.context.ApplicationScoped;
 import javax.transaction.Transactional;
 
-import dxc.microservice.quarkus.application.repository.ILoanRepository;
-import dxc.microservice.quarkus.domain.model.Loan;
+import dxc.microservice.quarkus.domain.model.loan.Loan;
+import dxc.microservice.quarkus.domain.ports.spi.LoanRepository;
 import dxc.microservice.quarkus.infrastructure.db.hibernate.dbo.LoanEntity;
 import dxc.microservice.quarkus.infrastructure.db.hibernate.exceptions.DboException;
 import dxc.microservice.quarkus.infrastructure.db.hibernate.mapper.LoanMapper;
@@ -16,7 +16,7 @@ import lombok.AllArgsConstructor;
 
 @ApplicationScoped
 @AllArgsConstructor
-public class LoanDboRepository implements ILoanRepository {
+public class LoanDboRepository implements LoanRepository {
 
     LoanPanacheRepository repository;
 
@@ -36,7 +36,7 @@ public class LoanDboRepository implements ILoanRepository {
     @Transactional
     public void save(Loan loan) {
         LoanEntity entity = loanMapper.toDbo(loan);
-        entity.setId(UUID.randomUUID().toString());
+        entity.setId(this.nextLoanId());
         repository.persistAndFlush(entity);
         loanMapper.updateDomainFromEntity(entity, loan);
     }
@@ -44,7 +44,7 @@ public class LoanDboRepository implements ILoanRepository {
     @Override
     @Transactional
     public void update(Loan loan) {        
-        LoanEntity entity = repository.findByIdOptional(loan.getId())
+        LoanEntity entity = repository.findByIdOptional(loan.getId().getId())
                 .orElseThrow(() -> new DboException("No loan found for loan Id [%s]", loan.getId()));
         loanMapper.updateEntityFromDomain(loan, entity);
         repository.persist(entity);
@@ -55,5 +55,10 @@ public class LoanDboRepository implements ILoanRepository {
     @Transactional
     public void delete(String id) {
         repository.deleteById(id);
+    }
+
+    @Override
+    public String nextLoanId() {
+        return UUID.randomUUID().toString();        
     }
 }

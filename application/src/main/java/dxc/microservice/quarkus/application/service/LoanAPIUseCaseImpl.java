@@ -4,17 +4,18 @@ import java.util.List;
 
 import javax.enterprise.context.ApplicationScoped;
 
-import dxc.microservice.quarkus.application.repository.ILoanRepository;
-import dxc.microservice.quarkus.domain.model.Loan;
+import dxc.microservice.quarkus.application.ports.api.LoanAPIUseCase;
+import dxc.microservice.quarkus.domain.model.loan.Loan;
+import dxc.microservice.quarkus.domain.ports.spi.LoanRepository;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 @ApplicationScoped
 @AllArgsConstructor
 @Slf4j
-public class LoanService implements ILoanService {
+public class LoanAPIUseCaseImpl implements LoanAPIUseCase {
 
-    ILoanRepository loanRepository;
+    LoanRepository loanRepository;
 
     public Loan getLoan(String id) {      
         log.debug("Getting loan {}", id);

@@ -1,0 +1,24 @@
+
+mp:
+  messaging:
+    incoming:
+      loans-in:
+        connector: smallrye-kafka
+        topic: loans
+#        key:
+#          deserializer: org.apache.kafka.common.serialization.IntegerDeserializer
+#        value:
+#          deserializer: org.apache.kafka.common.serialization.StringDeserializer
+    outgoing:
+      prices-out:
+        connector: smallrye-kafka 
+        topic: loans   
+#         key:
+#           serializer: org.apache.kafka.common.serialization.IntegerSerializer
+#         value:
+#           serializer: org.apache.kafka.common.serialization.StringSerializer
+
+"%prod":
+  kafka:
+    bootstrap:
+      servers: ${kafka_host}:9092
