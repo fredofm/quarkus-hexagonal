@@ -4,8 +4,10 @@ import java.util.List;
 
 import javax.enterprise.context.ApplicationScoped;
 
-import dxc.microservice.quarkus.application.ports.api.LoanAPIUseCase;
+import dxc.microservice.quarkus.application.ports.api.LoanAPIService;
 import dxc.microservice.quarkus.domain.model.loan.Loan;
+import dxc.microservice.quarkus.domain.model.loan.LoanFactory;
+import dxc.microservice.quarkus.domain.ports.spi.EventBus;
 import dxc.microservice.quarkus.domain.ports.spi.LoanRepository;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -13,11 +15,13 @@ import lombok.extern.slf4j.Slf4j;
 @ApplicationScoped
 @AllArgsConstructor
 @Slf4j
-public class LoanAPIUseCaseImpl implements LoanAPIUseCase {
+public class LoanAPIServiceImpl implements LoanAPIService {
 
     LoanRepository loanRepository;
+    LoanFactory loanFactory;
+    EventBus eventBus;
 
-    public Loan getLoan(String id) {      
+    public Loan getLoan(String id) {
         log.debug("Getting loan {}", id);
         return loanRepository.findById(id);
     }
@@ -25,7 +29,7 @@ public class LoanAPIUseCaseImpl implements LoanAPIUseCase {
     @Override
     public void deleteLoan(String id) {
         log.debug("Deleting loan {}", id);
-       
+
         loanRepository.delete(id);
     }
 
@@ -39,7 +43,11 @@ public class LoanAPIUseCaseImpl implements LoanAPIUseCase {
     public void create(Loan loan) {
         log.debug("Creating loan: {}", loan);
 
-        loanRepository.save(loan);
+        Loan newLoan = loanFactory.createLoan(loan);
+
+        loanRepository.save(newLoan);
+
+        eventBus.publish(newLoan.domainEvents());        
     }
 
     @Override

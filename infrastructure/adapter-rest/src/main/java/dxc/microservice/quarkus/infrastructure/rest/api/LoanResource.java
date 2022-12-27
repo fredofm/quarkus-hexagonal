@@ -5,7 +5,7 @@ import java.util.stream.Collectors;
 
 import javax.ws.rs.core.Response;
 
-import dxc.microservice.quarkus.application.ports.api.LoanAPIUseCase;
+import dxc.microservice.quarkus.application.ports.api.LoanAPIService;
 import dxc.microservice.quarkus.domain.model.loan.Loan;
 import dxc.microservice.quarkus.infrastructure.rest.mapper.LoanDTOMapper;
 import dxc.micrservice.quarkus.infrastructure.rest.api.LoansAPI;
@@ -18,14 +18,25 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class LoanResource implements LoansAPI{
 
-    LoanAPIUseCase loanService;
+    LoanAPIService loanService;
 
     LoanDTOMapper loanMapper;
 
     @Override
     public Response doGetAllLoans() {
         log.debug("doGetAllLoans()");
-        return Response.ok(loanService.getAllLoans().stream().map(p -> loanMapper.toDto(p)).collect(Collectors.toList())).build();
+        
+        Response response;
+
+        var loans = loanService.getAllLoans();
+
+        if (!loans.isEmpty()) {
+            response = Response.ok(loans.stream().map(p -> loanMapper.toDto(p)).collect(Collectors.toList())).build();
+        } else {
+            response = Response.noContent().build();
+        }
+        
+        return response;
     }
 
     @Override
@@ -52,7 +63,7 @@ public class LoanResource implements LoansAPI{
 
         ResponseMessageDTO response = ResponseMessageDTO.builder().message("Loan created successfully").build();
 
-        return Response.ok(response).build();
+        return Response.status(Response.Status.CREATED).entity(response).build();
     }
 
     @Override

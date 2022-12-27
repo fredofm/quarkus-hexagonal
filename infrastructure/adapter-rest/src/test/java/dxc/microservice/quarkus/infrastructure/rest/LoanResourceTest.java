@@ -11,9 +11,11 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
-import dxc.microservice.quarkus.application.ports.api.LoanAPIUseCase;
+import dxc.microservice.quarkus.application.ports.api.LoanAPIService;
 import dxc.microservice.quarkus.domain.model.loan.Loan;
+import dxc.microservice.quarkus.domain.model.loan.LoanFactory;
 import dxc.microservice.quarkus.domain.model.loan.LoanId;
+import dxc.microservice.quarkus.domain.ports.spi.EventBus;
 import dxc.microservice.quarkus.domain.ports.spi.LoanRepository;
 import dxc.micrservice.quarkus.infrastructure.rest.dto.LoanDTO;
 import io.quarkus.test.Mock;
@@ -27,8 +29,16 @@ public class LoanResourceTest {
   @Produces
   LoanRepository loanRepository;
 
+  @Mock
+  @Produces
+  EventBus eventBus;
+
+  @Mock
+  @Produces
+  LoanFactory loanFactory;
+
   @InjectMock
-  LoanAPIUseCase loanService;
+  LoanAPIService loanService;
 
   @BeforeEach
   public void testPrepare() {

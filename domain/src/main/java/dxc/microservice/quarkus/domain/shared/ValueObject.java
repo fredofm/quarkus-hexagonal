@@ -2,8 +2,6 @@ package dxc.microservice.quarkus.domain.shared;
 
 import java.io.Serializable;
 
-import lombok.Getter;
-
 public interface ValueObject<T> extends Serializable {
 
     /**

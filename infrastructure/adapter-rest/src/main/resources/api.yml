@@ -130,13 +130,16 @@ components:
           description: Annual interest rate
           format: double
         userId:
-          type: integer
+          type: string
           description: Unique user identifier
-          format: int64
+          format: uuid
         loanDate:
           type: string
           format: date-time
           description: Loan date as defined by date-time - RFC3339
+        loanState:
+          type: string
+          enum: [APPROVED, REJECTED, PENDING]
             
   # Basic authentication
   securitySchemes:

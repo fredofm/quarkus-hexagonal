@@ -36,7 +36,6 @@ public class LoanDboRepository implements LoanRepository {
     @Transactional
     public void save(Loan loan) {
         LoanEntity entity = loanMapper.toDbo(loan);
-        entity.setId(this.nextLoanId());
         repository.persistAndFlush(entity);
         loanMapper.updateDomainFromEntity(entity, loan);
     }

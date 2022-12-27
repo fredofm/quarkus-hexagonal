@@ -7,6 +7,7 @@ import javax.enterprise.context.ApplicationScoped;
 import javax.enterprise.event.Observes;
 import javax.inject.Inject;
 
+import dxc.microservice.quarkus.domain.model.loan.LoanState;
 import dxc.microservice.quarkus.infrastructure.db.dynamodb.dbo.LoanEntity;
 import io.quarkus.arc.profile.UnlessBuildProfile;
 import io.quarkus.runtime.StartupEvent;
@@ -46,6 +47,7 @@ public class DevBootstrap {
                 .numberOfYears(30)
                 .loanDate(Instant.now())
                 .userId(UUID.randomUUID().toString())
+                .state(LoanState.PENDING.value())
                 .build());
 
         loansTable.putItem(LoanEntity.builder().id(UUID.randomUUID().toString())
@@ -54,6 +56,7 @@ public class DevBootstrap {
                 .numberOfYears(15)
                 .loanDate(Instant.now())
                 .userId(UUID.randomUUID().toString())
+                .state(LoanState.PENDING.value())
                 .build());
     }
 

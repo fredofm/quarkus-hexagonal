@@ -37,7 +37,6 @@ public class LoanDboRepository implements LoanRepository {
     @Override
     public void save(Loan loan) {        
         LoanEntity entity = loanMapper.toDbo(loan);
-        entity.setId(nextLoanId());
 
         loanTable.putItem(entity);
     }

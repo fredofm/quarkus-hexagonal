@@ -1,0 +1,27 @@
+{
+  "namespace": "dxc.microservice.quarkus.infrastructure.events.kafka",
+  "type": "record",
+  "name": "LoanStateChangedArvo",
+  "fields": [
+    {
+      "name": "eventId",
+      "type": "string"
+    },
+    {
+      "name": "occurredOn",
+      "type": "string"
+    },
+    {
+      "name": "loanId",
+      "type": "string"
+    },
+    {
+      "name": "fromState",
+      "type": "string"
+    },
+    {
+      "name": "state",
+      "type": "string"
+    }
+  ]
+}

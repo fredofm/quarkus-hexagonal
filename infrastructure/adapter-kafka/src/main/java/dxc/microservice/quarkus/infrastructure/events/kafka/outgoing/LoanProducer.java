@@ -1,18 +1,37 @@
 package dxc.microservice.quarkus.infrastructure.events.kafka.outgoing;
 
-import javax.inject.Inject;
+import java.util.Collection;
+
+import javax.enterprise.context.ApplicationScoped;
 
 import org.eclipse.microprofile.reactive.messaging.Channel;
 import org.eclipse.microprofile.reactive.messaging.Emitter;
 
-import dxc.microservice.quarkus.domain.model.loan.Loan;
-import io.smallrye.reactive.messaging.kafka.Record;
+import dxc.microservice.quarkus.domain.events.LoanStateChanged;
+import dxc.microservice.quarkus.domain.ports.spi.EventBus;
+import dxc.microservice.quarkus.domain.shared.DomainEvent;
+import dxc.microservice.quarkus.infrastructure.events.kafka.LoanStateChangedArvo;
+import lombok.extern.slf4j.Slf4j;
 
-public class LoanProducer {
-    @Inject @Channel("movies-out")
-    Emitter<Record<String, Long>> emitter;
+@ApplicationScoped
+@Slf4j
+public class LoanProducer implements EventBus {
+    
+    @Channel("loans-out")
+    Emitter<LoanStateChangedArvo> emitter;
 
-    public void sendMovieToKafka(Loan loan) {
-        emitter.send(Record.of(loan.getId().getId(), loan.getLoanAmount()));
+    @Override
+    public void publish(Collection<DomainEvent> events) {
+        log.debug("publish({})", events);
+        events.forEach(event -> {
+            LoanStateChanged loanEvent = ((LoanStateChanged)event);
+            emitter.send(LoanStateChangedArvo.newBuilder()
+                    .setEventId(loanEvent.getEventId().toString())
+                    .setFromState(loanEvent.getFromState().toString())
+                    .setOccurredOn(loanEvent.occurredOn().toString())
+                    .setState(loanEvent.getState().toString())
+                    .setLoanId(loanEvent.getLoanId().getId())
+                    .build());
+        });
     }
 }

@@ -1,10 +1,9 @@
 package dxc.microservice.quarkus.domain.ports.spi;
 
-import dxc.microservice.quarkus.domain.shared.DomainEvent;
-import dxc.microservice.quarkus.domain.shared.RootAggregate;
+import java.util.Collection;
 
-import java.util.List;
+import dxc.microservice.quarkus.domain.shared.DomainEvent;
 
 public interface EventBus {
-    void publish(final List<DomainEvent<RootAggregate>> events);
+    void publish(final Collection<DomainEvent> events);
 }

@@ -38,16 +38,21 @@
       <artifactId>adapter-rest</artifactId>
       <version>0.0.1-SNAPSHOT</version>
     </dependency>
-    <dependency>
+<!--     <dependency>
       <groupId>dxc.microservice.quarkus</groupId>
       <artifactId>adapter-dynamodb</artifactId>
       <version>0.0.1-SNAPSHOT</version>
-    </dependency>
-    <!-- <dependency>
+    </dependency> -->
+    <dependency>
       <groupId>dxc.microservice.quarkus</groupId>
       <artifactId>adapter-postgresql</artifactId>
       <version>0.0.1-SNAPSHOT</version>
-    </dependency> -->
+    </dependency>
+    <dependency>
+      <groupId>dxc.microservice.quarkus</groupId>
+      <artifactId>adapter-kafka</artifactId>
+      <version>0.0.1-SNAPSHOT</version>
+    </dependency>
 
     <!-- Vault configuration -->
     <dependency>

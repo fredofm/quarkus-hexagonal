@@ -4,7 +4,7 @@ import java.util.List;
 
 import dxc.microservice.quarkus.domain.model.loan.Loan;
 
-public interface LoanAPIUseCase {
+public interface LoanAPIService {
 
     public Loan getLoan(String id);
 

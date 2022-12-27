@@ -29,6 +29,8 @@ public class LoanEntity {
 
     private String userId;
 
+    private String state;
+
     @DynamoDbPartitionKey    
     public String getId() {
         return id;        
