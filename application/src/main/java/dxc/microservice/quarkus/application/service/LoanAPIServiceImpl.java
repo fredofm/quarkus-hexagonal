@@ -2,8 +2,6 @@ package dxc.microservice.quarkus.application.service;
 
 import java.util.List;
 
-import javax.enterprise.context.ApplicationScoped;
-
 import dxc.microservice.quarkus.application.ports.api.LoanAPIService;
 import dxc.microservice.quarkus.domain.model.loan.Loan;
 import dxc.microservice.quarkus.domain.model.loan.LoanFactory;
@@ -12,7 +10,6 @@ import dxc.microservice.quarkus.domain.ports.spi.LoanRepository;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
-@ApplicationScoped
 @AllArgsConstructor
 @Slf4j
 public class LoanAPIServiceImpl implements LoanAPIService {

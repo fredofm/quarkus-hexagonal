@@ -16,10 +16,14 @@ public class LoanConsumer {
 
     @Incoming("loans-in")
     public void receive(LoanStateChangedArvo event) {
-        log.info("Got a loan event: %d - %s", event);
+        log.info("Got a loan event: {}", event);
         
         LoanId loanId = LoanId.builder().id(event.getLoanId()).build();
 
-        loanStatusService.approveLoan(loanId);
+        try {
+            loanStatusService.approveLoan(loanId);
+        } catch (RuntimeException e) {
+            // TODO error logic
+        }
     }
 }
