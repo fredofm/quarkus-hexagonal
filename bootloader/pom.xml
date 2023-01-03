@@ -6,7 +6,7 @@
   <packaging>jar</packaging>
 
   <parent>
-    <groupId>dxc.microservice.quarkus</groupId>
+    <groupId>com.microservice.quarkus</groupId>
     <artifactId>quarkus-hexagonal</artifactId>
     <version>0.0.1-SNAPSHOT</version>
   </parent>
@@ -29,27 +29,27 @@
     </dependency>
 
     <dependency>
-      <groupId>dxc.microservice.quarkus</groupId>
+      <groupId>com.microservice.quarkus</groupId>
       <artifactId>application</artifactId>
       <version>0.0.1-SNAPSHOT</version>
     </dependency>
     <dependency>
-      <groupId>dxc.microservice.quarkus</groupId>
+      <groupId>com.microservice.quarkus</groupId>
       <artifactId>adapter-rest</artifactId>
       <version>0.0.1-SNAPSHOT</version>
     </dependency>
 <!--     <dependency>
-      <groupId>dxc.microservice.quarkus</groupId>
+      <groupId>com.microservice.quarkus</groupId>
       <artifactId>adapter-dynamodb</artifactId>
       <version>0.0.1-SNAPSHOT</version>
     </dependency> -->
     <dependency>
-      <groupId>dxc.microservice.quarkus</groupId>
+      <groupId>com.microservice.quarkus</groupId>
       <artifactId>adapter-postgresql</artifactId>
       <version>0.0.1-SNAPSHOT</version>
     </dependency>
     <dependency>
-      <groupId>dxc.microservice.quarkus</groupId>
+      <groupId>com.microservice.quarkus</groupId>
       <artifactId>adapter-kafka</artifactId>
       <version>0.0.1-SNAPSHOT</version>
     </dependency>

@@ -5,7 +5,7 @@
     <packaging>jar</packaging>
 
     <parent>
-        <groupId>dxc.microservice.quarkus</groupId>
+        <groupId>com.microservice.quarkus</groupId>
         <artifactId>quarkus-hexagonal</artifactId>
         <version>0.0.1-SNAPSHOT</version>
     </parent>
@@ -16,7 +16,7 @@
 
     <dependencies>
         <dependency>
-            <groupId>dxc.microservice.quarkus</groupId>
+            <groupId>com.microservice.quarkus</groupId>
             <artifactId>domain</artifactId>
             <version>0.0.1-SNAPSHOT</version>
         </dependency>

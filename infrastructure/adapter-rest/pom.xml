@@ -5,7 +5,7 @@
     <packaging>jar</packaging>
 
     <parent>
-        <groupId>dxc.microservice.quarkus</groupId>
+        <groupId>com.microservice.quarkus</groupId>
         <artifactId>quarkus-infrastructure</artifactId>
         <version>0.0.1-SNAPSHOT</version>
     </parent>
@@ -16,7 +16,7 @@
 
     <dependencies>
         <dependency>
-            <groupId>dxc.microservice.quarkus</groupId>
+            <groupId>com.microservice.quarkus</groupId>
             <artifactId>application</artifactId>
             <version>0.0.1-SNAPSHOT</version>
         </dependency>
@@ -107,9 +107,9 @@
                             <templateDirectory>JavaJaxRS/spec</templateDirectory>
                             <!-- <configHelp>true</configHelp> -->
                             <configOptions>
-                                <modelPackage>dxc.micrservice.quarkus.infrastructure.rest.dto</modelPackage>
-                                <apiPackage>dxc.micrservice.quarkus.infrastructure.rest.api</apiPackage>
-                                <packageName>dxc.micrservice.quarkus.infrastructure.rest</packageName>
+                                <modelPackage>com.micrservice.quarkus.infrastructure.rest.dto</modelPackage>
+                                <apiPackage>com.micrservice.quarkus.infrastructure.rest.api</apiPackage>
+                                <packageName>com.micrservice.quarkus.infrastructure.rest</packageName>
                                 <useSwaggerAnnotations>true</useSwaggerAnnotations>
                                 <additionalModelTypeAnnotations>@lombok.Builder</additionalModelTypeAnnotations>                                
                                 <library>quarkus</library>

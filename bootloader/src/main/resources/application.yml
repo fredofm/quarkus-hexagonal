@@ -28,7 +28,7 @@ quarkus:
 
     log:
       category:
-        "dxc.microservice.quarkus":
+        "com.microservice.quarkus":
           level: DEBUG
         "io.quarkus.vault":
           level: DEBUG

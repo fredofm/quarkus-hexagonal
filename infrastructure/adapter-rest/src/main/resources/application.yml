@@ -9,7 +9,7 @@ project:
   quarkus:  
     log:          
       category:
-        "dxc.microservice.quarkus":
+        "com.microservice.quarkus":
           level: DEBUG
       file:
         enable: true

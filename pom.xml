@@ -3,7 +3,7 @@
     xmlns="http://maven.apache.org/POM/4.0.0"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
     <modelVersion>4.0.0</modelVersion>
-    <groupId>dxc.microservice.quarkus</groupId>
+    <groupId>com.microservice.quarkus</groupId>
     <artifactId>quarkus-hexagonal</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <packaging>pom</packaging>

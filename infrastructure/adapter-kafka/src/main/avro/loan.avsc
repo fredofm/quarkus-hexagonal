@@ -1,5 +1,5 @@
 {
-  "namespace": "dxc.microservice.quarkus.infrastructure.events.kafka",
+  "namespace": "com.microservice.quarkus.infrastructure.events.kafka",
   "type": "record",
   "name": "LoanStateChangedArvo",
   "fields": [
